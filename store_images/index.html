@@ -17,18 +17,6 @@
 
 <body>
   <p>
-    <img id="img1" src="1.jpg" alt="First image" width="320">
-  </p>
-  <p>
-    <img id="img2" src="2.jpg" alt="First image" width="320">
-  </p>
-  <p>
-    <img id="img3" src="3.jpg" alt="First image" width="320">
-  </p>
-  <p>
-    <img id="img4" src="4.jpg" alt="First image" width="320">
-  </p>
-  <p>
     <img id="img5" src="5.png" alt="First image">
   </p>
   <div class="output"></div>
@@ -39,7 +27,7 @@
         this.renderer.setSize(640, 480);
         domElement.appendChild(this.renderer.domElement);
 
-        this.camera = new THREE.PerspectiveCamera(70, 640.0/480.0, 1, 1000);
+        this.camera = new THREE.PerspectiveCamera(70, 640.0 / 480.0, 1, 1000);
         this.camera.position.z = 400;
 
         this.material = new THREE.MeshPhongMaterial();
@@ -60,59 +48,28 @@
         directionalLight.position.set(1, 1, 1).normalize();
         this.scene.add(directionalLight);
 
-        for (let i = 1; i <= 5; ++i) {
-          $(`#img${i}`).click((e) => {
+        $(`#img5`).click((e) => {
+          let texture = new THREE.TextureLoader().load(
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF4SURBVEhL7ZQhmoQwDIWRSCSSoyA5AhKJ5AZIjoDkGBwNyb6PPvJl0lDY2R03v6JNmpcmKdn+Yb4Ct3wFhHVd67peloXrkxsBHKuqKnsFO3GgsixhyvOc65MbgXAsxgRCHjRkmdG+FIBfnLvQ9z39DnQeRtsXmOeZ7gdt29LgodMP0HDgCCD3oijoe0Tfto02j7iM0zTRFguY3NOhgU5fSqqrZAV0OqbQLtof2fBLVckK0P4gd6CvG7Lh4okA1xeYGZMp4FoN6zsC4zjS6USui+qHHXwEDRtIPPQkCO7D1q3CKe6erbYCwzCIWa4ZQHQ9vk3TuH3SGlhaAZzR10QbaXgdmPTjoJMrAHQKABXHpp739PhqTywdAWA0DHSKiDuEzUtvVABVpqMHYukm4Vt3CPBlBLMLNLquo/svkTKmBID5NT3BdCgloG9t/thuk9zR8gXidiWGMo0jYB4USM9lGkfA/MXezj3gCEh9/5K4kGryv/BhgX3/AU3K2FPtae+fAAAAAElFTkSuQmCC"
+          );
 
-/*
-              let texture = new THREE.TextureLoader().load(
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF4SURBVEhL7ZQhmoQwDIWRSCSSoyA5AhKJ5AZIjoDkGBwNyb6PPvJl0lDY2R03v6JNmpcmKdn+Yb4Ct3wFhHVd67peloXrkxsBHKuqKnsFO3GgsixhyvOc65MbgXAsxgRCHjRkmdG+FIBfnLvQ9z39DnQeRtsXmOeZ7gdt29LgodMP0HDgCCD3oijoe0Tfto02j7iM0zTRFguY3NOhgU5fSqqrZAV0OqbQLtof2fBLVckK0P4gd6CvG7Lh4okA1xeYGZMp4FoN6zsC4zjS6USui+qHHXwEDRtIPPQkCO7D1q3CKe6erbYCwzCIWa4ZQHQ9vk3TuH3SGlhaAZzR10QbaXgdmPTjoJMrAHQKABXHpp739PhqTywdAWA0DHSKiDuEzUtvVABVpqMHYukm4Vt3CPBlBLMLNLquo/svkTKmBID5NT3BdCgloG9t/thuk9zR8gXidiWGMo0jYB4USM9lGkfA/MXezj3gCEh9/5K4kGryv/BhgX3/AU3K2FPtae+fAAAAAElFTkSuQmCC"
-  );
-  */
+          //let texture = new THREE.Texture(e.currentTarget);
+          this.mesh.material.needsUpdate = true;
+          this.mesh.material.map = texture;
+        });
 
-  let texture = new THREE.Texture(e.currentTarget);
-  //debugger;
-            this.mesh.material.needsUpdate = true;
-            this.mesh.material.map = texture;
-            //let texture = new THREE.Texture(e.currentTarget);
-            //this.mesh.material.needsUpdate = true;
-            //this.mesh.material.map = texture;
-
-            //debugger;
-            //this.material.uniforms.texture.value = texture;
-          });
-        }
-
-        window.requestAnimationFrame(()=>this.animate());
+        window.requestAnimationFrame(() => this.animate());
       }
 
       animate() {
-        console.log("Hi");
-        window.requestAnimationFrame(()=>this.animate());
-      	this.mesh.rotation.x += 0.005;
-      	this.mesh.rotation.y += 0.01;
-      	this.renderer.render(this.scene, this.camera);
+        window.requestAnimationFrame(() => this.animate());
+        this.mesh.rotation.x += 0.005;
+        this.mesh.rotation.y += 0.01;
+        this.renderer.render(this.scene, this.camera);
       }
     }
 
     new World($(".output").get(0));
-    /*
-    function init() {
-      const renderer = new THREE.WebGLRenderer();
-	    $(".output").append(renderer.domElement);
-
-      // Create camera.
-    	let camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
-    	camera.position.z = 400;
-    }
-
-    init();
-  /*
-    for (let i = 1; i <= 4; ++i) {
-      $(`#img${i}`).click(() => {
-        alert(`Hello ${i}!`);
-      });
-    }
-    */
   </script>
 </body>
 
