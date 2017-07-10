@@ -49,13 +49,24 @@
         this.scene.add(directionalLight);
 
         $(`#img5`).click((e) => {
+          /*
           let texture = new THREE.TextureLoader().load(
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF4SURBVEhL7ZQhmoQwDIWRSCSSoyA5AhKJ5AZIjoDkGBwNyb6PPvJl0lDY2R03v6JNmpcmKdn+Yb4Ct3wFhHVd67peloXrkxsBHKuqKnsFO3GgsixhyvOc65MbgXAsxgRCHjRkmdG+FIBfnLvQ9z39DnQeRtsXmOeZ7gdt29LgodMP0HDgCCD3oijoe0Tfto02j7iM0zTRFguY3NOhgU5fSqqrZAV0OqbQLtof2fBLVckK0P4gd6CvG7Lh4okA1xeYGZMp4FoN6zsC4zjS6USui+qHHXwEDRtIPPQkCO7D1q3CKe6erbYCwzCIWa4ZQHQ9vk3TuH3SGlhaAZzR10QbaXgdmPTjoJMrAHQKABXHpp739PhqTywdAWA0DHSKiDuEzUtvVABVpqMHYukm4Vt3CPBlBLMLNLquo/svkTKmBID5NT3BdCgloG9t/thuk9zR8gXidiWGMo0jYB4USM9lGkfA/MXezj3gCEh9/5K4kGryv/BhgX3/AU3K2FPtae+fAAAAAElFTkSuQmCC"
           );
+          */
 
-          //let texture = new THREE.Texture(e.currentTarget);
+          let texture = new THREE.Texture(e.currentTarget);
+          texture.needsUpdate = true;
           this.mesh.material.needsUpdate = true;
           this.mesh.material.map = texture;
+
+          /*
+          texture.needsUpdate = true;
+          this.material = new THREE.MeshPhongMaterial({map: texture});
+          let geometry = new THREE.BoxGeometry(200, 200, 200);
+          this.mesh = new THREE.Mesh(geometry, this.material);
+          this.scene.add(this.mesh);
+          */
         });
 
         window.requestAnimationFrame(() => this.animate());
@@ -63,13 +74,24 @@
 
       animate() {
         window.requestAnimationFrame(() => this.animate());
-        this.mesh.rotation.x += 0.005;
-        this.mesh.rotation.y += 0.01;
+        if (this.mesh) {
+          this.mesh.rotation.x += 0.005;
+          this.mesh.rotation.y += 0.01;
+        }
         this.renderer.render(this.scene, this.camera);
       }
     }
 
-    new World($(".output").get(0));
+    let world = new World($(".output").get(0));
+    /*
+    let image = document.createElement("img");
+    image.src = "5.png";
+    image.addEventListener("load", (e) => {
+      let texture = new THREE.Texture(e);
+      world.mesh.material.needsUpdate = true;
+      world .mesh.material.map = texture;
+    });
+    */
   </script>
 </body>
 
